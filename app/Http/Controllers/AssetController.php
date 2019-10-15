@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Asset;
+use App\Category;
 use Illuminate\Http\Request;
 
 class AssetController extends Controller
@@ -14,7 +15,8 @@ class AssetController extends Controller
      */
     public function index()
     {
-        //
+        $assets = Asset::all();
+        return view('assets.index')->with('assets', $assets);
     }
 
     /**
@@ -24,7 +26,8 @@ class AssetController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('assets.create')->with('categories', $categories);
     }
 
     /**
@@ -35,7 +38,39 @@ class AssetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = array(
+            "name" => "required",
+            "description" => "required",
+            "serialNo" => "required",
+            "image" => "required|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "category" => "required"
+        );
+
+        $this->validate($request, $rules);
+
+        $asset = new Asset();
+        $asset->name = $request->input('name');
+        $asset->description = $request->input('description');
+        $asset->serialNo = $request->input('serialNo');
+        $asset->category_id = $request->input('category');
+
+        // handle image file upload
+        $image = $request->file('image');
+
+        // set the file name 
+        $file_name = time() . "." . $image->getClientOriginalExtension();
+        $destination = "images/";
+        $image->move($destination, $file_name);
+
+        $asset->img_path = $destination.$file_name;
+
+        if ($asset->save()) {
+            $request->session()->flash('status', 'Asset successfully added!');
+            return redirect("/assets/create");
+        } else {
+            $request->session()->flash('status', 'Asset not added.');
+            return redirect("/assets/create");
+        }
     }
 
     /**
