@@ -1,6 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
+    @if($errors->any())
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors as $error)
+                            <li>{{$error}}</li>
+                        @endforeach
+                    </ul>
+                </div>     
+            </div>
+        </div>
+    @endif
 	<div class="row">
 
         <div class="col-lg-8 offset-lg-2">
@@ -25,6 +38,7 @@
                         <label for="name">Name:</label>
                         <input type="text" name="name" id="txt-category" class="form-control">
                     </div>
+                    <div id="addCatNotif"></div>
 
                     <button type="button" class="btn btn-success" id="btn-add-category">Add category</button>
 

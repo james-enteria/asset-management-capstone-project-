@@ -35,7 +35,36 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /*$request->validate([
+            'category' => 'bail|required|alpha_num|unique:categories,name'
+        ]);*/
+        $catName = $request->input('category');
+        if(isset($catName)){
+            if(gettype($catName) === "string" && $catName != ""){
+                $cleanName = htmlspecialchars($catName);
+                $category = new Category;
+                $category->name = $cleanName;
+                if($category->save()){
+                    return response()->json([
+                        'message' => "Category added successfully",
+                        'data' => "<option value=\"$category->id\">$category->name</option>"
+                    ], 201);
+                }else{
+                    return response()->json([
+                        'message' => "Failed to save new category."
+                    ]);
+                }
+            }else{
+                return response()->json([
+                    'message' => "Category name cannot be an empty string"
+                ]);
+            }
+        }else{
+            return response()->json([
+                'message' => "Failed to submit new category."
+            ]);
+        }
+        
     }
 
     /**
