@@ -46,7 +46,7 @@ class AssetController extends Controller
             "category" => "required"
         );
 
-        $this->validate($request, $rules);
+        //$this->validate($request, $rules);
 
         $asset = new Asset();
         $asset->name = $request->input('name');

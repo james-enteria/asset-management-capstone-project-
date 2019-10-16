@@ -45,6 +45,10 @@
                 </div>
 
             </div>
+            {{-- END OF ADD CATEGORY --}}
+
+
+
 
             <form method="post" action="/assets" enctype="multipart/form-data">
 
@@ -52,27 +56,27 @@
 
                 <div class="form-group">
                     <label for="name">Name:</label>
-                    <input type="text" name="name" id="name" class="form-control">
+                    <input type="text" name="name" id="name" class="form-control" required>
                 </div>
 
                 <div class="form-group">
                     <label for="description">Description:</label>
-                    <textarea name="description" id="description" class="form-control"></textarea>
+                    <textarea name="description" id="description" class="form-control" required></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="serialNo">Serial Number:</label>
-                    <input type="text" name="serialNo" id="serialNo" class="form-control">
+                    <input type="text" name="serialNo" id="serialNo" class="form-control" required>
                 </div>
 
                 <div class="form-group">
                     <label for="image">Upload image:</label>
-                    <input type="file" name="image" id="image" class="form-control">
+                    <input type="file" name="image" id="image" class="form-control" required>
                 </div>
 
                 <div class="form-group">
                     <label for="category">Category:</label>
-                    <select name="category" id="txt-categories" class="form-control">
+                    <select name="category" id="txt-categories" class="form-control" required>
                         @if (count($categories) > 0)
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -81,7 +85,7 @@
                     </select>
                 </div>  
 
-                <button type="submit" class="btn btn-success">Add Asset</button>
+                <button type="submit" class="btn btn-success" id="addAsset">Add Asset</button>
                 <a class="btn btn-warning" href="/assets">Cancel</a>
 
             </form>
