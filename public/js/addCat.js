@@ -9,7 +9,7 @@ btnAddCategory.addEventListener('click', () => {
     let formData = new FormData;
     formData.append('category', txtCategory.value);
 
-    console.log(formData.get('category'));
+    //console.log(formData.get('category'));
     const route = 'http://localhost:8000/categories';
     const payload = {
         method: 'post',
@@ -35,5 +35,6 @@ btnAddCategory.addEventListener('click', () => {
             txtCategories.innerHTML += data.data;    
         }        
         addCatNotif.innerHTML = data.message;
+        console.log(data.dupe);
     })
 })
