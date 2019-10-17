@@ -92,7 +92,11 @@ class AssetController extends Controller
      */
     public function edit(Asset $asset)
     {
-        //
+        $asset = Asset::find($id);
+
+        $categories = Category::all();
+
+        return view('assets.edit')->with('asset', $asset)->with('categories', $categories); 
     }
 
     /**
@@ -104,7 +108,39 @@ class AssetController extends Controller
      */
     public function update(Request $request, Asset $asset)
     {
-        //
+        $rules = array(
+            "name" => "required",
+            "description" => "required",
+            "serialNo" => "required",
+            "image" => "required|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "category" => "required"
+        );
+
+        //$this->validate($request, $rules);
+
+        $asset = new Asset();
+        $asset->name = $request->input('name');
+        $asset->description = $request->input('description');
+        $asset->serialNo = $request->input('serialNo');
+        $asset->category_id = $request->input('category');
+
+        // handle image file upload
+        $image = $request->file('image');
+
+        // set the file name 
+        $file_name = time() . "." . $image->getClientOriginalExtension();
+        $destination = "images/";
+        $image->move($destination, $file_name);
+
+        $asset->img_path = $destination.$file_name;
+
+        if ($asset->save()) {
+            $request->session()->flash('status', 'Asset successfully added!');
+            return redirect("/assets/create");
+        } else {
+            $request->session()->flash('status', 'Asset not added.');
+            return redirect("/assets/create");
+        }
     }
 
     /**
@@ -115,6 +151,28 @@ class AssetController extends Controller
      */
     public function destroy(Asset $asset)
     {
-        //
+        $asset = Product::find($id);
+
+        //toggle isActive from true to false and back
+
+        if($asset->isActive === 1){
+
+            $asset->isActive = 0;//setting isActive to false
+
+            session()->flash('status', 'Asset deactivated');
+
+        } else {
+
+            //reactivate if currently deactivated
+
+            $asset->isActive = 1;
+
+            session()->flash('status', 'Asset reactivated');
+
+        }
+
+        $asset->save();
+
+        return redirect("/assets");
     }
 }
