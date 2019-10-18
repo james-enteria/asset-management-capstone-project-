@@ -10,7 +10,7 @@ btnAddCategory.addEventListener('click', () => {
     formData.append('category', txtCategory.value);
 
     //console.log(formData.get('category'));
-    const route = 'http://localhost:8000/categories';
+    const route = 'http://127.0.0.1:8001/categories';
     const payload = {
         method: 'post',
         body: formData,

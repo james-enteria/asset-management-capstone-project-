@@ -71,7 +71,7 @@
 
                         </small>
 
-                        <form method="post" action="/products/{{$asset->id}}">
+                        <form method="post" action="/assets/{{$asset->id}}">
 
                             @csrf
 
@@ -79,7 +79,7 @@
 
                             <div class="btn-group btn-block">
 
-                                <a class="btn btn-primary" href="/products/{{$asset->id}}/edit">Edit</a>
+                                <a class="btn btn-primary" href="/assets/{{$asset->id}}/edit">Edit</a>
 
                                 {{-- toggle button appearance depending on current status of product's isActive property --}}
 
@@ -123,7 +123,7 @@
                         <p>Stocks: {{ $asset->stocks}}<role_id/p>
                     </div>
                     <div class="card-footer">
-                        <form action="/cart/" method="POST">
+                        <form action="/transactions/" method="POST">
                             @csrf
                             <div class="form-group">
                                 
@@ -131,7 +131,7 @@
                                 <input type="number" name="quantity">
                             </div>
 
-                            <button type="submit" class="btn btn-success">Add to cart</button>
+                            <button type="submit" class="btn btn-success" >Get this!</button>
                         </form>
                     </div>
                 </div>

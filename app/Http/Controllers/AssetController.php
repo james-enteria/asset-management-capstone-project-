@@ -90,7 +90,7 @@ class AssetController extends Controller
      * @param  \App\Asset  $asset
      * @return \Illuminate\Http\Response
      */
-    public function edit(Asset $asset)
+    public function edit($id)
     {
         $asset = Asset::find($id);
 
@@ -106,40 +106,53 @@ class AssetController extends Controller
      * @param  \App\Asset  $asset
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Asset $asset)
+    public function update(Request $request, $id)
     {
         $rules = array(
             "name" => "required",
             "description" => "required",
             "serialNo" => "required",
-            "image" => "required|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "image" => "image|mimes:jpeg,png,jpg,gif,svg|max:2048",
             "category" => "required"
         );
 
         //$this->validate($request, $rules);
 
-        $asset = new Asset();
+        $asset = Asset::find($id);
         $asset->name = $request->input('name');
         $asset->description = $request->input('description');
         $asset->serialNo = $request->input('serialNo');
         $asset->category_id = $request->input('category');
+        $asset->isActive = true;
 
         // handle image file upload
-        $image = $request->file('image');
+        
+        if($request->file('image') != null) {
 
-        // set the file name 
-        $file_name = time() . "." . $image->getClientOriginalExtension();
-        $destination = "images/";
-        $image->move($destination, $file_name);
+            //handle image file upload
 
-        $asset->img_path = $destination.$file_name;
+            $image = $request->file('image');
 
-        if ($asset->save()) {
-            $request->session()->flash('status', 'Asset successfully added!');
-            return redirect("/assets/create");
-        } else {
-            $request->session()->flash('status', 'Asset not added.');
-            return redirect("/assets/create");
+            //set the file name
+
+            $file_name = time(). "." . $image->getClientOriginalExtension();
+
+            $destination = "images/";
+
+            $image->move($destination, $file_name);
+
+            unlink(public_path(). '/' .$asset->img_path);
+
+            $asset->img_path = $destination.$file_name;
+
+        }
+        if($asset->save()){
+            $request->session()->flash('status', 'Product successfully updated');
+            return redirect("/assets");
+        }else{
+
+            $request->session()->flash('status', 'Product not updated');
+            return redirect("/assets");
         }
     }
 
@@ -149,9 +162,9 @@ class AssetController extends Controller
      * @param  \App\Asset  $asset
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Asset $asset)
+    public function destroy($id)
     {
-        $asset = Product::find($id);
+        $asset = Asset::find($id);
 
         //toggle isActive from true to false and back
 
