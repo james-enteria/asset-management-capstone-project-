@@ -72,6 +72,7 @@
                 <div class="form-group">
                     <label for="image">Upload image:</label>
                     <input type="file" name="image" id="image" class="form-control" required>
+                    <img src="" height="200" alt="Image preview...">
                 </div>
 
                 <div class="form-group">

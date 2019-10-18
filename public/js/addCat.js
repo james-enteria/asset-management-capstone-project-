@@ -9,7 +9,8 @@ btnAddCategory.addEventListener('click', () => {
     let formData = new FormData;
     formData.append('category', txtCategory.value);
 
-    //console.log(formData.get('category'));
+    //always change fetch route below
+    //
     const route = 'http://127.0.0.1:8001/categories';
     const payload = {
         method: 'post',
@@ -38,3 +39,17 @@ btnAddCategory.addEventListener('click', () => {
         console.log(data.dupe);
     })
 })
+
+function previewFile() {
+  var preview = document.querySelector('img');
+  var file    = document.querySelector('input[type=file]').files[0];
+  var reader  = new FileReader();
+
+  reader.addEventListener("load", function () {
+    preview.src = reader.result;
+  }, false);
+
+  if (file) {
+    reader.readAsDataURL(file);
+  }
+}

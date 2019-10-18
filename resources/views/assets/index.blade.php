@@ -120,7 +120,7 @@
                         <p>{{$asset->category->name}}</p>
 
                         <p>{{$asset->price}}</p>
-                        <p>Stocks: {{ $asset->stocks}}<role_id/p>
+                        
                     </div>
                     <div class="card-footer">
                         <form action="/transactions/" method="POST">
@@ -128,7 +128,7 @@
                             <div class="form-group">
                                 
                                 <input type="hidden" name="productId" value="{{$asset->id}}">
-                                <input type="number" name="quantity">
+                                
                             </div>
 
                             <button type="submit" class="btn btn-success" >Get this!</button>

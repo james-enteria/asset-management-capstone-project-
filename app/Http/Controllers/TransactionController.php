@@ -37,7 +37,8 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id = $request->input('id');
+        
     }
 
     /**
