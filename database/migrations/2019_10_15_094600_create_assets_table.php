@@ -19,6 +19,7 @@ class CreateAssetsTable extends Migration
             $table->string('serialNo')->unique();
             $table->text('description');
             $table->string('img_path');
+            
             $table->boolean('isActive')->default(true);
             $table->timestamps();
             $table->unsignedBigInteger('category_id');

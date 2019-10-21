@@ -122,8 +122,9 @@
                         <p>{{$asset->price}}</p>
                         
                     </div>
+
                     <div class="card-footer">
-                        <form action="/transactions/" method="POST">
+                        <form action="/transactions" method="POST">
                             @csrf
                             <div class="form-group">
                                 
@@ -131,8 +132,45 @@
                                 
                             </div>
 
-                            <button type="submit" class="btn btn-success" >Get this!</button>
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Get this!</button>
+                            {{-- TRANSACTION MODAL --}}
+                            <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    {{-- modal header --}}
+                                  <div class="modal-header">
+                                    <h5 class="modal-title">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                    {{-- modal body --}}
+                                  <div class="modal-body">
+                                    <p>Modal body text goes here.</p>
+
+                                        {{-- DATE --}}
+                                    <label for="beginDate">Borrow Date:</label>
+                                    <input type="date" name="beginDate" id="beginDate">
+                                    <label for="beginDate">Return Date:</label>
+                                    <input type="date" name="beginDate" id="endDate">
+
+                                        {{--  TIME --}}
+                                    <label for="beginDate">Start Time:</label>
+                                    <input type="date" name="beginDate" id="beginTime">
+                                    <label for="beginDate">Return Time:</label>
+                                    <input type="date" name="beginDate" id="endTime">
+
+                                  </div>
+                                  {{-- modal footer --}}
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                  </div>
+                                </div>
+                          </div>
+                        </div>
                         </form>
+
                     </div>
                 </div>
             </div>

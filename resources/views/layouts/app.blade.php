@@ -32,15 +32,19 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('assets.index') }}">Assets Dashboard</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('transactions.index') }}">Transactions</a>
+                            </li>
                         @else
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('assets.index') }}">Assets Catalogue</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('transactions.index') }}">Orders</a>
+                            </li>
                         @endcan
 
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('transactions.index') }}">Transactions</a>
-                            </li>
+                            
                     </ul>
 
                     <!-- Right Side Of Navbar -->

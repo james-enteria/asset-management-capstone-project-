@@ -18,6 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->string('refNo')->unique();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('status_id')->default(1);
+            $table->unsignedBigInteger('asset_id')->nullable();
             $table->dateTime('borrowDate');
             $table->dateTime('returnDate');
             $table->timestamps();
@@ -33,7 +34,7 @@ class CreateTransactionsTable extends Migration
             ->on('statuses')
             ->onDelete('restrict')
             ->onUpdate('cascade');
-            $table->foreign('asset_id')->nullable();
+            $table->foreign('asset_id')->nullable()
             ->references('id')
             ->on('assets')
             ->onDelete('restrict')

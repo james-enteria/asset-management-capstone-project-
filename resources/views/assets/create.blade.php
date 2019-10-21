@@ -71,11 +71,8 @@
 
                 <div class="form-group">
                     <label for="image">Upload image:</label>
-                    <input type="file" name="image" id="image" class="form-control" value="{{$asset->img_path}}" onchange="previewFile()">
-                    <div class="card col-4 my-2">
-                        
-                    <img src="{{asset($asset->img_path)}}" height="200" class="my-2">
-                    </div>
+                    <input type="file" name="image" id="image" class="form-control" >
+                    
                 </div>
 
                 <div class="form-group">
