@@ -34,7 +34,7 @@ class CreateTransactionsTable extends Migration
             ->on('statuses')
             ->onDelete('restrict')
             ->onUpdate('cascade');
-            $table->foreign('asset_id')->nullable()
+            $table->foreign('asset_id')
             ->references('id')
             ->on('assets')
             ->onDelete('restrict')

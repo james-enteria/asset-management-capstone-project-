@@ -11,7 +11,7 @@ btnAddCategory.addEventListener('click', () => {
 
     //always change fetch route below
     //
-    const route = 'http://127.0.0.1:8001/categories';
+    const route = 'http://127.0.0.1:8000/categories';
     const payload = {
         method: 'post',
         body: formData,
