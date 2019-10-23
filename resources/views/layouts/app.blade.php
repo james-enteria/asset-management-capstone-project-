@@ -37,15 +37,14 @@
                                 <a class="nav-link" href="{{ route('transactions.index') }}">Transactions</a>
                             </li>
                         @else
-                            @can(null)
-                            @else
+                            
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('assets.index') }}">Assets Catalogue</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('transactions.index') }}">Orders</a>
                             </li>
-                            @endcan
+                            
 
                         @endcan
                     </ul>

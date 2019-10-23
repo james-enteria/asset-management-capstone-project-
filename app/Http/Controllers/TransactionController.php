@@ -61,6 +61,7 @@ class TransactionController extends Controller
         $catId = $request->input('catId');
         $catCode = Category::find($catId)->name;
 
+    
         
         $refNo= $userId. "-" . $catCode ."-" . $borrowDate . "-" . $returnDate;
 
@@ -69,7 +70,7 @@ class TransactionController extends Controller
         $transaction = new Transaction;
         $transaction->refNo = $refNo;
         $transaction->user_id = $userId;
-        $transaction->category_id = $catId;
+        $transaction->category_id = $catCode;
         $transaction->borrowDate = $borrowDate;
         $transaction->returnDate = $returnDate;
 
@@ -132,6 +133,6 @@ class TransactionController extends Controller
     public function destroy($id)
     {
         $transaction = Transaction::find($id);
-        
+
     }
 }
