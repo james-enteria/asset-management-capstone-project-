@@ -112,9 +112,42 @@ class TransactionController extends Controller
      * @param  \App\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Transaction $transaction)
+    public function update(Request $request, $id)
     {
-        //
+        $rules = array(
+            "borrowDate"=> "required",
+            "returnDate"=> "required"
+        );
+        
+        //dd($request->input(''));
+        $borrowDate = Carbon::createFromFormat('Y-m-d', $request->input('borrowDate'))
+        ->tz('UTC')
+        ->toDateString();
+        $returnDate = Carbon::createFromFormat('Y-m-d', $request->input('returnDate'))
+        ->tz('UTC')
+        ->toDateString();
+
+        $userId = Auth::user()->id;
+        
+
+        $refNo= $userId. " -"  . $borrowDate . " to " . $returnDate;
+
+        
+
+        $transaction = Transaction::find($id);
+        $transaction->refNo = $refNo;
+
+        
+
+        $transaction->user_id = $userId;
+        //$transaction->category_id = $catId;
+        $transaction->borrowDate = $borrowDate;
+        $transaction->returnDate = $returnDate;
+
+        $transaction->save();
+        return redirect('transactions')->with('transactions', $transaction);
+        
+        
     }
 
     /**

@@ -38,6 +38,7 @@ class AssetController extends Controller
      */
     public function store(Request $request)
     {
+        
         $rules = array(
             "name" => "required",
             "description" => "required",

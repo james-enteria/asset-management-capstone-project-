@@ -20,30 +20,33 @@
 		      <th scope="col">Name</th>
 		      <th scope="col">Email</th>
 		      <th scope="col">Status</th>
+		      <th scope="col">Borrow Date</th>
 		      <th scope="col">Orders:</th>
 		    </tr>
 		  </thead>
 
 		  <tbody>
 		  	@foreach($transactions as $transaction)
+		  		<form action="/transaction" method="POST">
+		  		@csrf
 			    <tr>
 			      <th>{{$transaction->user_id}}</th>
-			      <td>{{$transaction->user->name}}</td>
+			      <td class="userName">{{$transaction->user->name}}</td>
 			      <td>{{$transaction->user->email}}</td>
 			      <td>{{$transaction->status->name}}</td>
+			      <td>{{$transaction->borrowDate}}</td>
 
 			      <td>
-			      	<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#viewRequest">View Request</button>
+			      	<button type="button" class="btn btn-warning view-request" data-toggle="modal" data-id="{{$transaction->user_id}}" data-name="{{$transaction->user->name}}" data-target="#viewRequest">View Request</button>
 			      </td>
+		  		</form>
 		    @endforeach
-
-			      
 		    				<div class="modal" tabindex="-1" role="dialog" id="viewRequest">
                               <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     {{-- modal header --}}
                                   <div class="modal-header">
-                                    <h3 class="modal-title">{{$transaction->user->name}}'s Request</h3>
+                                    <h5 class="modal-title" id="assetTitle">{{$transaction->user->name}}'s Request</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
@@ -51,20 +54,27 @@
                                     
                                   <div class="modal-body">
                                   	
-
+                                  	<p>
+                                  		{{$transaction->user_id}}
+                                  	</p>
                                   	{{-- insert code here --}}                                    
-
+                                  	<form action="/transaction">
+                                  		@csrf
+                                  		@method('PUT')
+                                  	</form>
                                     
                                   </div>
                                   {{-- modal footer --}}
                                   <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Reject dis </button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Reject dis </button>
                                     <button type="submit" class="btn btn-primary">Aight go ahead</button>
                                   </div>
                                 </div>
                               </div>
                             </div>
                             {{-- END OF MODAL --}}
+
+			      
 			    </tr>
 
 
@@ -72,4 +82,6 @@
 		  </tbody>
 		</table>
 		@endcan
+
+		<script type="text/javascript" src="{{ asset('js/modalOrder.js') }}"></script>
 @endsection

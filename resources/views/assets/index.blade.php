@@ -192,7 +192,7 @@
     
 </div>
 
-<script type="text/javascript" src=""></script>
+<script type="text/javascript" src="{{ asset('js/datePicker.js') }}"></script>
 
 @endsection
 
