@@ -20,13 +20,25 @@ class AssetsTableSeeder extends Seeder
             0 => 
             array (
                 'id' => 1,
-                'name' => 'Simple',
+                'name' => 'Simple Rick\'s wafers',
                 'serialNo' => '123asd',
                 'description' => 'some pink waffles',
                 'img_path' => 'images/1571395878.jpeg',
                 'isActive' => 1,
                 'created_at' => '2019-10-18 10:51:18',
-                'updated_at' => '2019-10-18 11:14:30',
+                'updated_at' => '2019-10-22 11:18:18',
+                'category_id' => 3,
+            ),
+            1 => 
+            array (
+                'id' => 2,
+                'name' => 'Plumbus',
+                'serialNo' => 'dasf312',
+                'description' => 'all around',
+                'img_path' => 'images/1571743393.jpg',
+                'isActive' => 1,
+                'created_at' => '2019-10-22 11:23:13',
+                'updated_at' => '2019-10-22 11:23:13',
                 'category_id' => 3,
             ),
         ));

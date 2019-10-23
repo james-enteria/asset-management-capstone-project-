@@ -28,6 +28,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                    
                         @can('isAdmin')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('assets.index') }}">Assets Dashboard</a>
@@ -36,15 +37,17 @@
                                 <a class="nav-link" href="{{ route('transactions.index') }}">Transactions</a>
                             </li>
                         @else
+                            @can(null)
+                            @else
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('assets.index') }}">Assets Catalogue</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('transactions.index') }}">Orders</a>
                             </li>
-                        @endcan
+                            @endcan
 
-                            
+                        @endcan
                     </ul>
 
                     <!-- Right Side Of Navbar -->

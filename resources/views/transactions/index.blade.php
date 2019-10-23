@@ -4,6 +4,7 @@
 	
 		@can('isAdmin')
 	    	<h1>User Transactions</h1>
+	    	<hr>
 	    
 	    @else
 	   		<h1>My Orders</h1>
@@ -11,37 +12,57 @@
 
 		{{-- In the transactions index view, generate a table that will show all transactions pending approval, another table for completed transactions, and another table for ongoing transactions (assets have been lent out to users) --}}
 		@can('isAdmin')
+				<h3>Pending</h3>
+				<table class="table">
 
-		<table class="table">
+				  <thead class="thead-dark">
+				    <tr>
+				      <th scope="col">Id Number</th>
+				      <th scope="col">Name</th>
+				      <th scope="col">Email</th>
+				      <th scope="col">Reference No. </th>
+				      <th scope="col">Borrow Date</th>
+				      <th scope="col">Action:</th>
+				    </tr>
+				  </thead>
 
-		  <thead class="thead-dark">
-		    <tr>
-		      <th scope="col">Id Number</th>
-		      <th scope="col">Name</th>
-		      <th scope="col">Email</th>
-		      <th scope="col">Status</th>
-		      <th scope="col">Borrow Date</th>
-		      <th scope="col">Orders:</th>
-		    </tr>
-		  </thead>
+				  <tbody>
+				  	@foreach($transactions as $transaction)
+		  				@if($transaction->status_id === 1)
 
-		  <tbody>
-		  	@foreach($transactions as $transaction)
-		  		<form action="/transaction" method="POST">
-		  		@csrf
-			    <tr>
-			      <th>{{$transaction->user_id}}</th>
-			      <td class="userName">{{$transaction->user->name}}</td>
-			      <td>{{$transaction->user->email}}</td>
-			      <td>{{$transaction->status->name}}</td>
-			      <td>{{$transaction->borrowDate}}</td>
+					    <tr>
+					      <th>{{$transaction->user_id}}</th>
+					      <td >{{$transaction->user->name}}</td>
+					      <td>{{$transaction->user->email}}</td>
+					      <td>{{$transaction->refNo}}</td>
+					      <td>{{$transaction->borrowDate}}</td>
 
-			      <td>
-			      	<button type="button" class="btn btn-warning view-request" data-toggle="modal" data-id="{{$transaction->user_id}}" data-name="{{$transaction->user->name}}" data-target="#viewRequest">View Request</button>
-			      </td>
-		  		</form>
-		    @endforeach
-		    				<div class="modal" tabindex="-1" role="dialog" id="viewRequest">
+					      <td>
+					      	
+					      		<form action="/transactions/{{$transaction->id}}" method="POST">
+						  		@csrf
+						  		@method('PUT')
+						  			<input type="text" name="status" id="status" value="3" hidden>
+					      			<button type="submit" class="btn btn-danger">Reject</button>
+					      		</form>
+
+
+					      		<form action="/transactions/{{$transaction->id}}" method="POST">
+						  		@csrf
+						  		@method('PUT')
+						  			<input type="text" name="status" id="status" value="2" hidden>
+					      			<button type="submit" class="btn btn-success">Approve</button>
+				  				</form>
+
+					      </td>
+					    </tr>
+					    @endif
+					@endforeach
+					</tbody>
+				</table>
+			
+
+		    	<div class="modal" tabindex="-1" role="dialog" id="viewRequest">
                               <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     {{-- modal header --}}
@@ -71,17 +92,51 @@
                                   </div>
                                 </div>
                               </div>
-                            </div>
+                </div>
                             {{-- END OF MODAL --}}
+                <h3>Ongoing</h3>
+			    <table class="table">
 
-			      
-			    </tr>
+				  	<thead class="thead-dark">
+					    <tr>
+					      <th scope="col">Id Number</th>
+					      <th scope="col">Name</th>
+					      <th scope="col">Email</th>
+					      <th scope="col">Reference No. </th>
+					      <th scope="col">Borrow Date</th>
+					      <th scope="col">Action:</th>
+					    </tr>
+				 	</thead>
+
+				  	<tbody>
+						@foreach($transactions as $transaction)
+							@if($transaction->status_id === 2)
+							    <tr>
+							      <th>{{$transaction->user_id}}</th>
+							      <td >{{$transaction->user->name}}</td>
+							      <td>{{$transaction->user->email}}</td>
+							      <td>{{$transaction->refNo}}</td>
+							      <td>{{$transaction->borrowDate}}</td>
+
+							      <td>
+						  				<form action="/transactions/{{$transaction->id}}" method="POST">
+								  		@csrf
+								  		@method('PUT')
+								  			<input type="text" name="status" id="status" value="1" hidden>
+							      			<button type="submit" class="btn btn-warning">Clear</button>
+						  				</form>
+							      </td>
+							    </tr>
+
+							@endif
+						@endforeach
 
 
+					</tbody>
+				</table>
 
-		  </tbody>
-		</table>
-		@endcan
+				
+	@endcan
 
-		<script type="text/javascript" src="{{ asset('js/modalOrder.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/modalOrder.js') }}"></script>
 @endsection

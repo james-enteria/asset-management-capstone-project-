@@ -47,10 +47,7 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        $rules = array(
-            "borrowDate"=> "required",
-            "returnDate"=> "required"
-        );
+        
         
         //dd($request->input(''));
         $borrowDate = Carbon::createFromFormat('Y-m-d', $request->input('borrowDate'))
@@ -61,24 +58,23 @@ class TransactionController extends Controller
         ->toDateString();
 
         $userId = Auth::user()->id;
-        
+        $catId = $request->input('catId');
+        $catCode = Category::find($catId)->name;
 
-        $refNo= $userId. " -"  . $borrowDate . " to " . $returnDate;
+        
+        $refNo= $userId. "-" . $catCode ."-" . $borrowDate . "-" . $returnDate;
 
         
 
         $transaction = new Transaction;
         $transaction->refNo = $refNo;
-
-        
-
         $transaction->user_id = $userId;
-        //$transaction->category_id = $catId;
+        $transaction->category_id = $catId;
         $transaction->borrowDate = $borrowDate;
         $transaction->returnDate = $returnDate;
 
         $transaction->save();
-        return redirect('transactions')->with('transactions', $transaction);
+        return redirect('transactions')->with('transaction', $transaction);
         
         
     }
@@ -89,9 +85,9 @@ class TransactionController extends Controller
      * @param  \App\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function show(Transaction $transaction)
+    public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -114,36 +110,13 @@ class TransactionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $rules = array(
-            "borrowDate"=> "required",
-            "returnDate"=> "required"
-        );
-        
-        //dd($request->input(''));
-        $borrowDate = Carbon::createFromFormat('Y-m-d', $request->input('borrowDate'))
-        ->tz('UTC')
-        ->toDateString();
-        $returnDate = Carbon::createFromFormat('Y-m-d', $request->input('returnDate'))
-        ->tz('UTC')
-        ->toDateString();
+        $transaction= Transaction::find($id);
 
-        $userId = Auth::user()->id;
-        
+        $statusId = $request->input('status');
 
-        $refNo= $userId. " -"  . $borrowDate . " to " . $returnDate;
+        //dd($statusId);
 
-        
-
-        $transaction = Transaction::find($id);
-        $transaction->refNo = $refNo;
-
-        
-
-        $transaction->user_id = $userId;
-        //$transaction->category_id = $catId;
-        $transaction->borrowDate = $borrowDate;
-        $transaction->returnDate = $returnDate;
-
+        $transaction->status_id = $statusId;
         $transaction->save();
         return redirect('transactions')->with('transactions', $transaction);
         
@@ -156,8 +129,9 @@ class TransactionController extends Controller
      * @param  \App\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Transaction $transaction)
+    public function destroy($id)
     {
-        //
+        $transaction = Transaction::find($id);
+        
     }
 }

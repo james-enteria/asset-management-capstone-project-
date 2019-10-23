@@ -156,6 +156,7 @@
 
 
                                                 <input type="text" name="assetInput" id="assetInput" value="" hidden>
+                                                <input type="text" name="catId" id="catId" value="{{$asset->category_id}}" hidden>
 
                                                 <label for="beginDate">Borrow Date:</label>
                                                 <input type="date" name="borrowDate" id="borrowDate" required>
