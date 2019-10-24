@@ -82,37 +82,7 @@
 			</div> --}}
 			
 
-		    	<div class="modal" tabindex="-1" role="dialog" id="viewRequest">
-                              <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    {{-- modal header --}}
-                                  <div class="modal-header">
-                                    <h5 class="modal-title" id="assetTitle">{{$transaction->user->name}}'s Request</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                      <span aria-hidden="true">&times;</span>
-                                    </button>
-                                  </div>
-                                    
-                                  <div class="modal-body">
-                                  	
-                                  	<p>
-                                  		{{$transaction->user_id}}
-                                  	</p>
-                                  	{{-- insert code here --}}                                    
-                                  	<form action="/transaction">
-                                  		@csrf
-                                  		@method('PUT')
-                                  	</form>
-                                    
-                                  </div>
-                                  {{-- modal footer --}}
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Reject dis </button>
-                                    <button type="submit" class="btn btn-primary">Aight go ahead</button>
-                                  </div>
-                                </div>
-                              </div>
-                </div>
+		    	
                             {{-- END OF MODAL --}}
 
        {{--  <div class="collapse" id="onGoingCollapse">

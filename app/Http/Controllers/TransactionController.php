@@ -70,7 +70,7 @@ class TransactionController extends Controller
         $transaction = new Transaction;
         $transaction->refNo = $refNo;
         $transaction->user_id = $userId;
-        $transaction->category_id = $catCode;
+        $transaction->category_id = $catId;
         $transaction->borrowDate = $borrowDate;
         $transaction->returnDate = $returnDate;
 
