@@ -36,7 +36,7 @@ class AssetController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    /*public function store(Request $request)
     {
         
         $rules = array(
@@ -66,6 +66,66 @@ class AssetController extends Controller
         $asset->img_path = $destination.$file_name;
 
         if ($asset->save()) {
+            $request->session()->flash('status', 'Asset successfully added!');
+            return redirect("/assets/create");
+        } else {
+            $request->session()->flash('status', 'Asset not added.');
+            return redirect("/assets/create");
+        }
+    }*/
+
+    public function store(Request $request)
+    {
+        $quantity = $request->input('quantity');
+        $category = Category::where('id', $request->input('category'))->first();
+
+        $rules = array(
+            "image" => "required|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "category" => "required"
+        );
+
+
+
+        $this->validate($request, $rules);
+
+        // handle image file upload
+        $image = $request->file('image');
+
+        // set the file name 
+        $file_name = time() . "." . $image->getClientOriginalExtension();
+        $destination = "images/";
+
+        
+
+        //  $file = $image->move($destination, $file_name);
+        // dd($file);   
+        $img_path = $destination.$file_name;
+        
+
+        $validate = false;
+        // Setting of Serial No.s
+        for($i=0;$i<$quantity;$i++) {
+
+            $serialNo = '#'.time().'-'.Asset::all()->count();
+
+            $asset = new Asset();
+            $asset->name = $request->input('name');
+        $asset->description = $request->input('description');
+            $asset->serialNo = $serialNo;
+            $asset->category_id = $request->input('category');
+            $asset->img_path = $img_path;
+
+
+            if(!$asset->save()){
+                $validate = true;
+            }
+
+        }
+        
+
+        $image->move($destination, $file_name);
+
+        if ($validate == false) {
             $request->session()->flash('status', 'Asset successfully added!');
             return redirect("/assets/create");
         } else {

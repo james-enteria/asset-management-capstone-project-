@@ -5,7 +5,7 @@
 @section('content')
 
     <h3>
-        Assets List
+        Item List
         @if(Auth::user() !==null)
              @if(Auth::user()->role_id ===1)
 
@@ -33,7 +33,7 @@
         {{-- if a user is an admin --}}
         @if(Auth::user()->role_id ===1)
         {{-- product admin dashboard --}}
-        @foreach($assets as $asset)
+        @foreach($categories as $category)
 
             <div class="col-3">
 
@@ -43,23 +43,23 @@
 
                     
 
-                    <img src="{{asset($asset->img_path)}}" class="card-img-top border" style="height: 150px; object-fit: cover;">
+                    <img src="{{asset($category->img_path)}}" class="card-img-top border" style="height: 150px; object-fit: cover;">
 
                     <div class="card-body">
 
                         
 
-                        <h5>{{$asset->name}}</h5>
+                        <h5>{{$category->name}}</h5>
 
-                        <p>{{$asset->category->name}}</p>
+                        {{-- <p>{{$category->category->name}}</p> --}}
 
-                        <p>{{$asset->price}}</p>
+                        <p>{{$category->price}}</p>
 
                         <small>
 
                             Status:
 
-                            @if($asset->isActive === 1)
+                            @if($category->isActive === 1)
 
                                 Active
 
@@ -71,7 +71,7 @@
 
                         </small>
 
-                        <form method="post" action="/assets/{{$asset->id}}">
+                        <form method="post" action="/categories/{{$category->id}}">
 
                             @csrf
 
@@ -79,11 +79,11 @@
 
                             <div class="btn-group btn-block">
 
-                                <a class="btn btn-primary" href="/assets/{{$asset->id}}/edit">Edit</a>
+                                <a class="btn btn-primary" href="/categories/{{$category->id}}/edit">Edit</a>
 
                                 {{-- toggle button appearance depending on current status of product's isActive property --}}
 
-                                @if($asset->isActive === 1)
+                                @if($category->isActive === 1)
 
                                     <button type="submit" class="btn btn-danger">Deactivate</button>
 
@@ -108,23 +108,23 @@
         @endforeach
     @else
     {{-- product admin dashboard --}}
-        @foreach($assets as $asset)
-            @if($asset->isActive===1)
+        @foreach($categories as $category)
+            @if($category->isActive===1)
             <div class="col-3">
                 <div class="card">
-                    <img src="{{asset($asset->img_path)}}" class="card-img-top border" style="height: 150px; object-fit: cover;">
+                    <img src="{{asset($category->img_path)}}" class="card-img-top border" style="height: 150px; object-fit: cover;">
 
                     <div class="card-body">
-                        <h5>{{$asset->name}}</h5>
+                        <h5>{{$category->name}}</h5>
 
-                        <p>{{$asset->category->name}}</p>
+                        <p>{{$category->category->name}}</p>
 
-                        <p>{{$asset->price}}</p>
+                        <p>{{$category->price}}</p>
                         
                     </div>
 
                     <div class="card-footer">
-                            <button type="button" class="btn btn-success getThis" data-id="{{$asset->id}}" data-name="{{$asset->name}}" data-toggle="modal" data-target="#exampleModal">Get this!</button>
+                            <button type="button" class="btn btn-success getThis" data-id="{{$category->id}}" data-name="{{$category->name}}" data-toggle="modal" data-target="#exampleModal">Get this!</button>
                     </div>
                 </div>
             </div>
@@ -135,15 +135,15 @@
                        
                                 
                                 
-                                
+                                {{-- 
                                     <form action="/transactions" method="POST">
-                                        @csrf
+                                        @csrf --}}
                             <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
                               <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     {{-- modal header --}}
                                   <div class="modal-header">
-                                    <h5 class="modal-title" id="assetTitle"></h5>
+                                    <h5 class="modal-title" id="categoryTitle"></h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                       <span aria-hidden="true">&times;</span>
                                     </button>
@@ -155,8 +155,8 @@
                                                     {{-- DATE --}}
 
 
-                                                <input type="text" name="assetInput" id="assetInput" value="" hidden>
-                                                <input type="text" name="catId" id="catId" value="{{$asset->category_id}}" hidden>
+                                                <input type="text" name="categoryInput" id="categoryInput" value="" hidden>
+                                                <input type="text" name="catId" id="catId" value="{{$category->id}}" hidden>
 
                                                 <label for="beginDate">Borrow Date:</label>
                                                 <input type="date" name="borrowDate" id="borrowDate" required>
@@ -176,7 +176,7 @@
                               </div>
                             </div>
                             {{-- END OF MODAL --}}
-                                    </form>
+                                    {{-- </form> --}}
 
                         
 

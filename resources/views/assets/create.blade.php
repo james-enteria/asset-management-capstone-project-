@@ -64,9 +64,11 @@
                     <textarea name="description" id="description" class="form-control" required></textarea>
                 </div>
 
+                
+
                 <div class="form-group">
-                    <label for="serialNo">Serial Number:</label>
-                    <input type="text" name="serialNo" id="serialNo" class="form-control" required>
+                    <label for="serialNo">Quantity:</label>
+                    <input type="number" name="quantity" id="quantity" class="form-control" required>
                 </div>
 
                 <div class="form-group">
