@@ -1,8 +1,8 @@
 let getThis = document.querySelectorAll('.getThis');
 
-let assetTitle = document.querySelector('#assetTitle');
+let categoryTitle = document.querySelector('#categoryTitle');
 
-let assetInput = document.querySelector('#assetInput');
+let catId = document.querySelector('#catId');
 
 getThis.forEach((button)=>{
 
@@ -14,9 +14,9 @@ getThis.forEach((button)=>{
 
         //console.log(id, name);
 
-        assetTitle.innerHTML = 'Select a date for ' + name;
+        categoryTitle.innerHTML = 'Select a date for ' + name;
 
-        assetInput.value = id;
+        catId.value = id;
 
     })
 

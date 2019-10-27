@@ -12,24 +12,7 @@
 
 		{{-- In the transactions index view, generate a table that will show all transactions pending approval, another table for completed transactions, and another table for ongoing transactions (assets have been lent out to users) --}}
 		@can('isAdmin')
-			{{-- <div class="row">
-				<div class="col-4">
-					<a href="#pendingCollapse" class="btn btn-primary" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample">Pending</a>
-				</div>
-				<div class="col-4">
-					<a href="#onGoingCollapse" class="btn btn-primary" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample">Ongoing</a>
-				</div>
-				<div class="col-4">
-					<a href="#historyCollapse" class="btn btn-primary" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample">Borrowing History</a>
-				</div>
-
-				
-				
-				
-			</div> --}}
 			
-			{{-- <div class="collapse" id="pendingCollapse">
-				<div class="card card-body"> --}}
 					<h3>Pending</h3>
 					<table class="table">
 
@@ -69,6 +52,7 @@
 							  		@csrf
 							  		@method('PUT')
 							  			<input type="text" name="status" id="status" value="2" hidden>
+							  			<input type="text" name="catId" id="catId" value="{{$transaction->category_id}}" hidden>
 						      			<button type="submit" class="btn btn-success">Approve</button>
 					  				</form>
 
@@ -142,6 +126,7 @@
 					      <th scope="col">Item Requested:</th>
 					      <th scope="col">Reference No. </th>
 					      <th scope="col">Borrow Date</th>
+					      <th scope="col">Return Date</th>
 					      <th scope="col">Action:</th>
 					    </tr>
 				 	</thead>
@@ -155,6 +140,11 @@
 							      <td>{{$transaction->category->name}}</td>
 							      <td>{{$transaction->refNo}}</td>
 							      <td>{{$transaction->borrowDate}}</td>
+							      @if($transaction->status_id ==4)
+							      	<td>{{$transaction->returnDate}}</td>
+							      @else
+							      	<td></td>
+							      @endif
 
 							      <td>
 						  				{{$transaction->status->name}}
@@ -167,10 +157,33 @@
 
 					</tbody>
 				</table>
-			{{-- </div>
-		</div> --}}
-				
+			</div>
+		</div>
+
 	@endcan
+	@cannot('isAdmin')
+		<div class="row justify-content-center">
+			@foreach($transactions as $transaction)
+
+				@if(Auth::user()->id == $transaction->user_id)
+					{{-- <th>{{$transaction->user_id}}</th>
+								      <td >{{$transaction->user->name}}</td>
+								      <td>{{$transaction->category->name}}</td>
+								      <td>{{$transaction->refNo}}</td>
+								      <td>{{$transaction->borrowDate}}</td> --}}
+					<div class="card col-10">
+						<p>Requested for: {{$transaction->category->name}}</p>	
+						<p>Borrowed on: {{$transaction->borrowDate}}</p>
+						@if($transaction->status_id==4)
+							<p>This item was returned at: {{$transaction->returnDate}}</p>
+						@else
+							<p>RETURN THIS IMMEDIATELY</p>
+						@endif	
+					</div>
+				@endif
+			@endforeach
+		</div>		
+	@endcannot
 
 	<script type="text/javascript" src="{{ asset('js/modalOrder.js') }}"></script>
 @endsection

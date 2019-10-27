@@ -49,7 +49,6 @@ class TransactionController extends Controller
     {
         
         
-        //dd($request->input(''));
         $borrowDate = Carbon::createFromFormat('Y-m-d', $request->input('borrowDate'))
         ->tz('UTC')
         ->toDateString();
@@ -61,14 +60,17 @@ class TransactionController extends Controller
         $catId = $request->input('catId');
         $catCode = Category::find($catId)->name;
 
+        $asset = $request->input('assetInput');
+        //dd($request);
     
         
         $refNo= $userId. "-" . $catCode ."-" . $borrowDate . "-" . $returnDate;
 
         
 
-        $transaction = new Transaction;
+        $transaction = new Transaction();
         $transaction->refNo = $refNo;
+        
         $transaction->user_id = $userId;
         $transaction->category_id = $catId;
         $transaction->borrowDate = $borrowDate;
@@ -115,9 +117,21 @@ class TransactionController extends Controller
 
         $statusId = $request->input('status');
 
-        //dd($statusId);
+        
+        $returnDate = Carbon::now()
+        ->tz('UTC')
+        ->toDateTimeString();
+        $returnDate = new Carbon();
 
+
+        /*$asset = new Asset;
+        $asset->category_id = $request->input('catId');
+        $asset = Asset::find($asset->category_id);*/
+
+    
+        //$transaction->asset_id = $assetId;
         $transaction->status_id = $statusId;
+        $transaction->returnDate = $returnDate;
         $transaction->save();
         return redirect('transactions')->with('transactions', $transaction);
         
@@ -132,7 +146,7 @@ class TransactionController extends Controller
      */
     public function destroy($id)
     {
-        $transaction = Transaction::find($id);
+        //$transaction = Transaction::find($id);
 
     }
 }

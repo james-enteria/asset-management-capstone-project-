@@ -119,7 +119,7 @@
 
                         <p>{{$asset->category->name}}</p>
 
-                        <p>{{$asset->price}}</p>
+                        <p>{{$asset->serialNo}}</p>
                         
                     </div>
 
@@ -155,7 +155,7 @@
                                                     {{-- DATE --}}
 
 
-                                                <input type="text" name="assetInput" id="assetInput" value="" hidden>
+                                                <input type="text" name="assetInput" id="assetInput" value="2" hidden>
                                                 <input type="text" name="catId" id="catId" value="{{$asset->category_id}}" hidden>
 
                                                 <label for="beginDate">Borrow Date:</label>

@@ -43,18 +43,6 @@ class UsersTableSeeder extends Seeder
             ),
             2 => 
             array (
-                'id' => 3,
-                'name' => 'james',
-                'email' => 'james@admin.com',
-                'email_verified_at' => NULL,
-                'password' => '$2y$10$q9jfSwm5SFH.vi2rrVBUs.qjZzbttax75CPGFu/CE/eLl.SojwdGi',
-                'remember_token' => NULL,
-                'created_at' => '2019-10-16 11:07:09',
-                'updated_at' => '2019-10-16 11:07:09',
-                'role_id' => 1,
-            ),
-            3 => 
-            array (
                 'id' => 4,
                 'name' => 'james',
                 'email' => 'james@user.com',
@@ -65,7 +53,7 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => '2019-10-18 10:01:30',
                 'role_id' => 2,
             ),
-            4 => 
+            3 => 
             array (
                 'id' => 5,
                 'name' => 'maria',
@@ -76,6 +64,18 @@ class UsersTableSeeder extends Seeder
                 'created_at' => '2019-10-23 10:30:43',
                 'updated_at' => '2019-10-23 10:30:43',
                 'role_id' => 2,
+            ),
+            4 => 
+            array (
+                'id' => 6,
+                'name' => 'James Admin',
+                'email' => 'james@admin.com',
+                'email_verified_at' => NULL,
+                'password' => '$2y$10$0v5zumn1l6jRsZ8fuc9Mh.EeIGraZ7AMp09DPjgsHiY8BWC3XfLai',
+                'remember_token' => NULL,
+                'created_at' => '2019-10-26 14:34:48',
+                'updated_at' => '2019-10-26 14:34:48',
+                'role_id' => 1,
             ),
         ));
         

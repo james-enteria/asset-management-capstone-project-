@@ -36,8 +36,18 @@
                     
                     <div class="form-group">
                         <label for="name">Name:</label>
-                        <input type="text" name="name" id="txt-category" class="form-control">
+                        <input type="text" name="name" id="name" class="form-control">
                     </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <input type="text" name="description" id="description" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="image">Image:</label>
+                        <input type="file" name="image" id="image" multiple class="form-control">
+                    </div>
+
                     <div id="addCatNotif"></div>
 
                     <button type="button" class="btn btn-success" id="btn-add-category">Add category</button>
@@ -54,28 +64,14 @@
 
                 @csrf
 
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" name="name" id="name" class="form-control" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="description">Description:</label>
-                    <textarea name="description" id="description" class="form-control" required></textarea>
-                </div>
-
+                
                 
 
                 <div class="form-group">
                     <label for="serialNo">Quantity:</label>
                     <input type="number" name="quantity" id="quantity" class="form-control" required>
                 </div>
-
-                <div class="form-group">
-                    <label for="image">Upload image:</label>
-                    <input type="file" name="image" id="image" class="form-control" >
-                    
-                </div>
+                
 
                 <div class="form-group">
                     <label for="category">Category:</label>

@@ -80,10 +80,10 @@ class AssetController extends Controller
         $category = Category::where('id', $request->input('category'))->first();
 
         $rules = array(
-            "image" => "required|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "quantity" => "required",
             "category" => "required"
         );
-
+/*
 
 
         $this->validate($request, $rules);
@@ -101,7 +101,7 @@ class AssetController extends Controller
         // dd($file);   
         $img_path = $destination.$file_name;
         
-
+*/
         $validate = false;
         // Setting of Serial No.s
         for($i=0;$i<$quantity;$i++) {
@@ -109,13 +109,10 @@ class AssetController extends Controller
             $serialNo = '#'.time().'-'.Asset::all()->count();
 
             $asset = new Asset();
-            $asset->name = $request->input('name');
-        $asset->description = $request->input('description');
+            
             $asset->serialNo = $serialNo;
             $asset->category_id = $request->input('category');
-            $asset->img_path = $img_path;
-
-
+            
             if(!$asset->save()){
                 $validate = true;
             }
@@ -123,7 +120,7 @@ class AssetController extends Controller
         }
         
 
-        $image->move($destination, $file_name);
+        //$image->move($destination, $file_name);
 
         if ($validate == false) {
             $request->session()->flash('status', 'Asset successfully added!');

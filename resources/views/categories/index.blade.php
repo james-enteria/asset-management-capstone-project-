@@ -53,7 +53,7 @@
 
                         {{-- <p>{{$category->category->name}}</p> --}}
 
-                        <p>{{$category->price}}</p>
+                        
 
                         <small>
 
@@ -117,9 +117,9 @@
                     <div class="card-body">
                         <h5>{{$category->name}}</h5>
 
-                        <p>{{$category->category->name}}</p>
+                        <p>{{$category->name}}</p>
 
-                        <p>{{$category->price}}</p>
+                        
                         
                     </div>
 
@@ -135,9 +135,8 @@
                        
                                 
                                 
-                                {{-- 
-                                    <form action="/transactions" method="POST">
-                                        @csrf --}}
+                        <form action="/transactions" method="POST">
+                         @csrf
                             <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
                               <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -148,14 +147,15 @@
                                       <span aria-hidden="true">&times;</span>
                                     </button>
                                   </div>
-                                    {{-- modal body --}}
+                                    
+                                    
                                         <div class="modal-body">
                                             
                                             <div class="form-group">
-                                                    {{-- DATE --}}
+                                                
 
 
-                                                <input type="text" name="categoryInput" id="categoryInput" value="" hidden>
+                                                
                                                 <input type="text" name="catId" id="catId" value="{{$category->id}}" hidden>
 
                                                 <label for="beginDate">Borrow Date:</label>
@@ -171,12 +171,13 @@
                                                 <button type="submit" class="btn btn-primary">Lemme get it</button>
                                             </div>
                                         </div>
+                                    
                                   {{-- modal footer --}}
                                 </div>
                               </div>
                             </div>
                             {{-- END OF MODAL --}}
-                                    {{-- </form> --}}
+                        </form>
 
                         
 

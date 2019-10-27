@@ -1,13 +1,19 @@
-const txtCategory = document.querySelector("#txt-category");
+//const txtCategory = document.querySelector("#txt-category");
 const txtCategories = document.querySelector("#txt-categories");
+const name = document.querySelector("#name");
 const btnAddCategory = document.querySelector("#btn-add-category");
+const description = document.querySelector("#description");
+const image = document.querySelector("#image");
 const addCatNotif = document.querySelector("#addCatNotif");
 const CSRFToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 //console.log(CSRFToken);
 btnAddCategory.addEventListener('click', () => {
     
     let formData = new FormData;
-    formData.append('category', txtCategory.value);
+    formData.append('name', name.value);
+    formData.append('description', description.value);
+    formData.append('image', image.files[0]);
+
 
     //always change fetch route below
     //
@@ -36,8 +42,8 @@ btnAddCategory.addEventListener('click', () => {
             txtCategories.innerHTML += data.data;    
         }        
         addCatNotif.innerHTML = data.message;
-        console.log(data.dupe);
-    })
+        
+    })  
 })
 
 function previewFile() {

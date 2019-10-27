@@ -15,7 +15,7 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('refNo')->unique();
+            $table->string('refNo');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('status_id')->default(1);
             $table->unsignedBigInteger('category_id');
@@ -47,8 +47,9 @@ class CreateTransactionsTable extends Migration
             ->on('categories')
             ->onDelete('restrict')
             ->onUpdate('cascade');
-
         });
+
+        
     }
 
     /**

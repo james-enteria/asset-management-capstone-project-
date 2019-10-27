@@ -36,21 +36,41 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $catName = $request->input('category');
-        //check if a category name was received asynchronously from assets.create
-        if(isset($catName)){
-            //check if data type is a string AND it is NOT empty
-            if(gettype($catName) === "string" && $catName != ""){
+        $name = $request->input('name');
+        $description = $request->input('description');
+
+
+        
+        
+        /*return response()->json([
+            'data' => $request->hasFile('image')
+        ]);*/
+        //check if all expected category information were received asynchronously from assets.create
+        if(isset($name) && isset($description) && $request->hasFile('image')){
+            //declare $image variable
+            $image = $request->file('image');
+            //check if data types are correct and none are empty strings
+            if((gettype($name) === "string" && $name != "") && (gettype($description) === "string" && $description != "")  && (strtolower($image->getClientOriginalExtension()) === "jpeg" || strtolower($image->getClientOriginalExtension()) === "jpg" || strtolower($image->getClientOriginalExtension()) === "png")){
                 //find a duplicate entry
-                $duplicate = Category::where('name', $catName)->first();
+                $duplicate = Category::where(strtolower('name'), strtolower($name))->first();
                 //if no duplicates were found
                 if($duplicate === null){
                     //sanitize the received form input
-                    $cleanName = htmlspecialchars($catName);
+                    $cleanName = htmlspecialchars($name);
+                    $cleanDescription = htmlspecialchars($description);
                     //instantiate a new category object from the Category class
                     $category = new Category;
                     //set its name property to be the sanitized form input
                     $category->name = $cleanName;
+                    $category->description = $cleanDescription;
+
+                    //handle image file upload
+                    $file_name = time() . "." . $image->getClientOriginalExtension();
+                    $destination = "images/";
+                    $image->move($destination, $file_name);
+
+                    $category->img_path = $destination.$file_name;
+
                     //if successfully saved
                     if($category->save()){
                         //return a json response with HTTP status code 201
@@ -72,7 +92,7 @@ class CategoryController extends Controller
                 }
             }else{//empty string submitted, return json response with HTTP status code 403
                 return response()->json([
-                    'message' => "Category name cannot be an empty string"
+                    'message' => "Category name, description, and code name cannot be empty strings. Also, image file type nhas to be jpeg, jpg, or png."
                 ], 403);
             }
         }else{//no category received from view, return json response with HTTP status code 500
@@ -81,6 +101,7 @@ class CategoryController extends Controller
             ], 500);
         }
         
+    
     }
 
     /**
@@ -123,8 +144,31 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        //
+        $category = Category::find($id);
+
+        //toggle isActive from true to false and back
+
+        if($category->isActive === 1){
+
+            $category->isActive = 0;//setting isActive to false
+
+            session()->flash('status', 'Category deactivated');
+
+        } else {
+
+            //reactivate if currently deactivated
+
+            $category->isActive = 1;
+
+            session()->flash('status', 'Category reactivated');
+
+        }
+
+        $category->save();
+
+        return redirect("/categories");
+    
     }
 }
