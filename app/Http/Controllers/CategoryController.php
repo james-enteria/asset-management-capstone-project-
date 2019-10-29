@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Asset;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -58,9 +59,9 @@ class CategoryController extends Controller
                     //sanitize the received form input
                     $cleanName = htmlspecialchars($name);
                     $cleanDescription = htmlspecialchars($description);
-                    //instantiate a new category object from the Category class
+                    
                     $category = new Category;
-                    //set its name property to be the sanitized form input
+                    
                     $category->name = $cleanName;
                     $category->description = $cleanDescription;
 
@@ -121,9 +122,13 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
-        //
+        $category = Category::find($id);
+
+        $assets = Asset::all();
+
+        return view('categories.edit')->with('assets', $assets)->with('category', $category); 
     }
 
     /**
@@ -133,9 +138,39 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
-        //
+        $name = $request->input('name');
+        $description = $request->input('description');
+            $image = $request->file('image');
+
+
+        
+                $duplicate = Category::where(strtolower('name'), strtolower($name))->first();
+                    $cleanName = htmlspecialchars($name);
+                    $cleanDescription = htmlspecialchars($description);
+                    
+                    $category = Category::find($id);
+                    
+                    $category->name = $cleanName;
+                    $category->description = $cleanDescription;
+
+                    //handle image file upload
+                    $file_name = time() . "." . $image->getClientOriginalExtension();
+                    $destination = "images/";
+                    $image->move($destination, $file_name);
+
+                    $category->img_path = $destination.$file_name;
+        
+            if($category->save()){
+                $request->session()->flash('status', 'Product successfully updated');
+                return redirect("/categories");
+
+            }else{$request->session()->flash('status', 'Product not updated');
+                return redirect("/categories");
+            }
+        
+    
     }
 
     /**

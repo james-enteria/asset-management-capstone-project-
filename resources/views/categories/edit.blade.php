@@ -33,7 +33,10 @@
                 <div class="card-header" data-toggle="collapse" href="#div-add-category">Add New Category</div>
 
                 <div class="card-body collapse" id="div-add-category">
-                    
+                    <form method="POST" action="/categories" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        
                     <div class="form-group">
                         <label for="name">Name:</label>
                         <input type="text" name="name" id="name" class="form-control" value="{{$category->name}}">
@@ -55,8 +58,9 @@
 
                     <div id="addCatNotif"></div>
 
-                    <button type="button" class="btn btn-success" id="btn-add-category">Add category</button>
+                    <button type="submit" class="btn btn-success" id="btn-add-category">Update category</button>
 
+                    </form>
                 </div>
 
             </div>
@@ -65,35 +69,7 @@
 
 
 
-            <form method="post" action="/assets" enctype="multipart/form-data">
-
-                @csrf
-
-                
-                
-
-                <div class="form-group">
-                    <label for="serialNo">Quantity:</label>
-                    <input type="number" name="quantity" id="quantity" class="form-control" required>
-                </div>
-                
-
-                <div class="form-group">
-                    <label for="category">Category:</label>
-                    <select name="category" id="txt-categories" class="form-control" required>
-                        @if (count($categories) > 0)
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                            @endforeach
-                        @endif
-                    </select>
-                </div>  
-
-                <button type="submit" class="btn btn-success" id="addAsset">Add Asset</button>
-                <a class="btn btn-warning" href="/assets">Cancel</a>
-
-            </form>
-
+           
         </div>
 
     </div>
