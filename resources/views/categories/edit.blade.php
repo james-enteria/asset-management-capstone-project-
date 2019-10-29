@@ -18,7 +18,7 @@
 
         <div class="col-lg-8 offset-lg-2">
 
-            <h3>Add New Asset</h3>
+            <h3>Update Category</h3>
 
             @if (session()->has('status'))
 
@@ -30,13 +30,13 @@
 
             <div class="card mb-3">
                 
-                <div class="card-header" data-toggle="collapse" href="#div-add-category">Add New Category</div>
+                <div class="card-header" data-toggle="collapse" href="#div-add-category">Edit Category</div>
 
                 <div class="card-body collapse" id="div-add-category">
-                    <form method="POST" action="/categories" enctype="multipart/form-data">
-                        @csrf
+                    <form method="POST" action="/categories/{{$category->id}}" >
                         @method('PUT')
-                        
+                        @csrf
+                                               
                     <div class="form-group">
                         <label for="name">Name:</label>
                         <input type="text" name="name" id="name" class="form-control" value="{{$category->name}}">
@@ -74,5 +74,5 @@
 
     </div>
 
-    <script src="{{ asset('js/addCat.js') }}"></script>
+    <script src="{{ asset('js/editCat.js') }}"></script>
 @endsection

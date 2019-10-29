@@ -71,17 +71,21 @@
 
                         </small>
 
-                        <form method="post" action="/categories/{{$category->id}}">
-
-                            @csrf
-
-                            @method('DELETE')
+                       
 
                             <div class="btn-group btn-block">
-
-                                <a class="btn btn-primary" href="/categories/{{$category->id}}/edit">Edit</a>
+                                <form action="/categories/{{$category->id}}/edit" method="GET">
+                                    @method('GET')
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary" href="/categories/{{$category->id}}/edit">Edit</button>
+                                </form>
 
                                 {{-- toggle button appearance depending on current status of product's isActive property --}}
+                                 <form method="post" action="/categories/{{$category->id}}">
+
+                                @csrf
+
+                                @method('DELETE')
 
                                 @if($category->isActive === 1)
 
@@ -92,10 +96,11 @@
                                     <button type="submit" class="btn btn-warning">Reactivate</button>
 
                                 @endif
+                                </form>
+
 
                             </div>
 
-                        </form>
 
                         
 

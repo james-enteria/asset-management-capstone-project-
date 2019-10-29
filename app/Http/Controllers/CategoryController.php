@@ -151,16 +151,19 @@ class CategoryController extends Controller
                     $cleanDescription = htmlspecialchars($description);
                     
                     $category = Category::find($id);
-                    
                     $category->name = $cleanName;
                     $category->description = $cleanDescription;
 
                     //handle image file upload
-                    $file_name = time() . "." . $image->getClientOriginalExtension();
-                    $destination = "images/";
-                    $image->move($destination, $file_name);
+                    if ($image != null) {
+                    
+                        $file_name = time() . "." . $image->getClientOriginalExtension();
+                        $destination = "images/";
+                        $image->move($destination, $file_name);
+                        unlink(public_path(). '/' .$category->img_path);
 
-                    $category->img_path = $destination.$file_name;
+                        $category->img_path = $destination.$file_name;
+                    }
         
             if($category->save()){
                 $request->session()->flash('status', 'Product successfully updated');
